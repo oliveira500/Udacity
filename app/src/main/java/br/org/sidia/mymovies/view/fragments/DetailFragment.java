@@ -1,4 +1,4 @@
-package br.org.sidia.mymovies;
+package br.org.sidia.mymovies.view.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import br.org.sidia.mymovies.R;
 import br.org.sidia.mymovies.model.Movie;
 
 public class DetailFragment extends Fragment {

@@ -1,4 +1,4 @@
-package br.org.sidia.mymovies.model;
+package br.org.sidia.mymovies.view.activities;
 
 import android.annotation.TargetApi;
 import android.content.Context;
