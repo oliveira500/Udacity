@@ -74,16 +74,28 @@ public class NetworkUtils {
         }
     }
 
-    /**
-     * This method checks if there is Internet Connection and return it.
-     *
-     * @param context use to get connectivity service status
-     * @return the status .
-     */
-    public static boolean hasInternetConnection(Context context){
-        ConnectivityManager connectivityManager =
-                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnectedOrConnecting();
+    public static boolean checkConnection(final Context context) {
+        boolean isConected = false;
+
+        final ConnectivityManager manager = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        final NetworkInfo mobileNetworkInfo = manager
+                .getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+        final NetworkInfo wifiNetworkInfo = manager
+                .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
+        if ((wifiNetworkInfo != null && wifiNetworkInfo.isAvailable() && wifiNetworkInfo
+                .isConnected())
+                || (mobileNetworkInfo != null
+                && mobileNetworkInfo.isAvailable() && mobileNetworkInfo
+                .isConnected())) {
+            isConected = true;
+        } else {
+
+            isConected = false;
+        }
+        return isConected;
     }
 }
