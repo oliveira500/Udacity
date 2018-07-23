@@ -3,19 +3,19 @@ package br.org.sidia.mymovies.view.fragments;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ProgressBar;
-
 import java.util.ArrayList;
-
+import java.util.List;
 import br.org.sidia.mymovies.R;
 import br.org.sidia.mymovies.interfaces.AsyncTaskDelegate;
 import br.org.sidia.mymovies.model.Movie;
@@ -29,16 +29,11 @@ import br.org.sidia.mymovies.view.view.adapters.MovieAdapter;
  */
 public class MainActivityFragment extends Fragment implements AsyncTaskDelegate{
 
-/*    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main, container, false);
-    }*/
-
     public MovieAdapter mMovieAdapter;
-
     private GridView mGridView;
-    private ProgressBar mLoadingBar;
+    private View mView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private List<Movie> movieList;
 
 
     private final String TAG = MainActivityFragment.class.getSimpleName();
@@ -47,15 +42,21 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        mView = layoutInflater.inflate(R.layout.fragment_main, viewGroup, false);
+        mGridView = mView.findViewById(R.id.gv_posters);
+        movieList = new ArrayList<Movie>();
+        initialize();
+        return mView;
+    }
 
-        mGridView = view.findViewById(R.id.gv_posters);
-        mLoadingBar = view.findViewById(R.id.pb_loading);
-
-        mMovieAdapter = new MovieAdapter(getActivity(), new ArrayList<Movie>());
+    private void initialize() {
+        movieList = new ArrayList<Movie>();
+        mSwipeRefreshLayout = mView.findViewById(R.id.swipe_refresh_layout);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.orange, R.color.green, R.color.blue);
+        mMovieAdapter = new MovieAdapter(getActivity(), movieList);
         mGridView.setAdapter(mMovieAdapter);
 
         Log.v(TAG, mMovieAdapter.toString());
@@ -69,20 +70,35 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate{
             }
         });
 
-        return view;
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //handling swipe refresh
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mMovieAdapter = new MovieAdapter(getActivity(), movieList);
+                        mGridView.setAdapter(mMovieAdapter);
+                        mMovieAdapter.notifyDataSetChanged();
+                        mGridView.smoothScrollToPosition(0);
+                        updateList();
+                    }
+                }, 2000);
+            }
+        });
     }
 
     private void updateList() {
 
-        if (NetworkUtils.hasInternetConnection(getContext())) {
-            MovieService downloadMovieData = new MovieService(this);
+        if (NetworkUtils.checkConnection(getContext())) {
+            MovieService movieService = new MovieService(this);
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
             String sortBy = preferences.getString(getString(R.string.pref_key),
                     getString(R.string.pref_sort_popular));
-            downloadMovieData.execute(sortBy);
+            movieService.execute(sortBy);
         } else {
-            View view = getActivity().findViewById(R.id.container);
-            Snackbar alertSnackbar = Snackbar.make(view, getString(R.string.no_internet_alert), Snackbar.LENGTH_LONG);
+            Snackbar alertSnackbar = Snackbar.make(mView, getString(R.string.no_internet_alert), Snackbar.LENGTH_LONG);
             alertSnackbar.setAction(getString(R.string.retry), new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -107,12 +123,12 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate{
 
     @Override
     public void onPreStart() {
-        mLoadingBar.setVisibility(View.VISIBLE);
+        //mLoading.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onFinish(Object output) {
-        mLoadingBar.setVisibility(View.INVISIBLE);
+        //mLoading.setVisibility(View.INVISIBLE);
         if (output != null){
             mMovieAdapter.clear();
             ArrayList<Movie> movieList = (ArrayList<Movie>) output;
