@@ -14,6 +14,7 @@ public class Movie implements Parcelable{
     private final String BASE_POSTER_PATH = "http://image.tmdb.org/t/p/w185/";
     private final String MAX_RATING = "/10";
     public static final String MOVIE_KEY = "30819113303356478821d6c6963d9b66";
+    public static final String FILTER = "filter_request";
 
     public Movie(String movieId, String originalTitle, String poster,
                  String overview, String rating, String releaseDate) {

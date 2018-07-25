@@ -34,6 +34,7 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate{
     private View mView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private List<Movie> movieList;
+    private String mFilterRequest;
 
 
     private final String TAG = MainActivityFragment.class.getSimpleName();
@@ -48,6 +49,13 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate{
         mView = layoutInflater.inflate(R.layout.fragment_main, viewGroup, false);
         mGridView = mView.findViewById(R.id.gv_posters);
         movieList = new ArrayList<Movie>();
+        Bundle bundle = getArguments();
+        if (bundle != null && bundle.containsKey(Movie.MOVIE_KEY)){
+            mFilterRequest = bundle.getString(Movie.MOVIE_KEY, getString(R.string.pref_sort_upcoming));
+        } else {
+            mFilterRequest = getString(R.string.pref_sort_upcoming);
+        }
+
         initialize();
         return mView;
     }
@@ -78,8 +86,6 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate{
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(false);
-                        mMovieAdapter = new MovieAdapter(getActivity(), movieList);
-                        mGridView.setAdapter(mMovieAdapter);
                         mMovieAdapter.notifyDataSetChanged();
                         mGridView.smoothScrollToPosition(0);
                         updateList();
@@ -89,13 +95,13 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate{
         });
     }
 
-    private void updateList() {
+    public void updateList() {
 
         if (NetworkUtils.checkConnection(getContext())) {
             MovieService movieService = new MovieService(this);
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
             String sortBy = preferences.getString(getString(R.string.pref_key),
-                    getString(R.string.pref_sort_popular));
+                    mFilterRequest);
             movieService.execute(sortBy);
         } else {
             Snackbar alertSnackbar = Snackbar.make(mView, getString(R.string.no_internet_alert), Snackbar.LENGTH_LONG);
@@ -134,5 +140,8 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate{
             ArrayList<Movie> movieList = (ArrayList<Movie>) output;
             mMovieAdapter.addAll(movieList);
         }
+    }
+    public void setFilterRequest(String mFilterRequest) {
+        this.mFilterRequest = mFilterRequest;
     }
 }
