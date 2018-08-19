@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import br.org.sidia.mymovies.DataBase.MoviesContract;
 import br.org.sidia.mymovies.R;
 import br.org.sidia.mymovies.model.Movie;
 
@@ -33,17 +34,17 @@ public class DetailFragment extends Fragment {
 
         Intent intent = getActivity().getIntent();
 
-        if (intent != null && intent.hasExtra(Movie.MOVIE_KEY)){
-            mMovie = intent.getParcelableExtra(Movie.MOVIE_KEY);
+        if (intent != null && intent.hasExtra(MoviesContract.MOVIE_KEY)){
+            mMovie = intent.getParcelableExtra(MoviesContract.MOVIE_KEY);
         }
 
         Log.v(LOG, mMovie.toString());
 
-        TextView detailTitle = (TextView) rootView.findViewById(R.id.detail_title);
-        TextView detailReleaseDate = (TextView) rootView.findViewById(R.id.detail_releaseDate);
-        TextView detailRating = (TextView) rootView.findViewById(R.id.detail_rating);
-        TextView detailOverview = (TextView) rootView.findViewById(R.id.detail_overview);
-        ImageView detailPoster = (ImageView) rootView.findViewById(R.id.detail_poster);
+        TextView detailTitle = rootView.findViewById(R.id.detail_title);
+        TextView detailReleaseDate = rootView.findViewById(R.id.detail_releaseDate);
+        TextView detailRating = rootView.findViewById(R.id.detail_rating);
+        TextView detailOverview = rootView.findViewById(R.id.detail_overview);
+        ImageView detailPoster = rootView.findViewById(R.id.detail_poster);
 
         detailTitle.setText(mMovie.getOriginalTitle());
         detailReleaseDate.setText(mMovie.getReleaseDate());

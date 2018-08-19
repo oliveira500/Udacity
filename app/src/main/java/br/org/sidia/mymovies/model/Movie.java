@@ -3,6 +3,8 @@ package br.org.sidia.mymovies.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import br.org.sidia.mymovies.DataBase.MoviesContract;
+
 public class Movie implements Parcelable{
     private String movieId;
     private String originalTitle;
@@ -11,18 +13,13 @@ public class Movie implements Parcelable{
     private String rating;
     private String releaseDate;
 
-    private final String BASE_POSTER_PATH = "http://image.tmdb.org/t/p/w185/";
-    private final String MAX_RATING = "/10";
-    public static final String MOVIE_KEY = "30819113303356478821d6c6963d9b66";
-    public static final String FILTER = "filter_request";
-
     public Movie(String movieId, String originalTitle, String poster,
                  String overview, String rating, String releaseDate) {
         this.movieId = movieId;
         this.originalTitle = originalTitle;
-        this.poster = BASE_POSTER_PATH + poster;
+        this.poster = MoviesContract.BASE_POSTER_PATH + poster;
         this.overview = overview;
-        this.rating = rating + MAX_RATING;
+        this.rating = rating + MoviesContract.MAX_RATING;
         this.releaseDate = releaseDate;
 
     }
@@ -64,15 +61,6 @@ public class Movie implements Parcelable{
             return new Movie[size];
         }
     };
-
-    public String getMovieId() {
-        return movieId;
-    }
-
-    public void setMovieId(String movieId) {
-        this.movieId = movieId;
-    }
-
     public String getOriginalTitle() {
         return originalTitle;
     }
@@ -112,5 +100,4 @@ public class Movie implements Parcelable{
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
-
 }

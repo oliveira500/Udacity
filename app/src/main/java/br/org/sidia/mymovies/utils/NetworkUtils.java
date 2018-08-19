@@ -5,14 +5,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Log;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
-
 import br.org.sidia.mymovies.BuildConfig;
 
 public class NetworkUtils {
@@ -80,8 +78,7 @@ public class NetworkUtils {
         final ConnectivityManager manager = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        final NetworkInfo mobileNetworkInfo = manager
-                .getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        final NetworkInfo mobileNetworkInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 
         final NetworkInfo wifiNetworkInfo = manager
                 .getNetworkInfo(ConnectivityManager.TYPE_WIFI);

@@ -1,10 +1,12 @@
 package br.org.sidia.mymovies.view.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,6 +18,8 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import java.util.ArrayList;
 import java.util.List;
+
+import br.org.sidia.mymovies.DataBase.MoviesContract;
 import br.org.sidia.mymovies.R;
 import br.org.sidia.mymovies.interfaces.AsyncTaskDelegate;
 import br.org.sidia.mymovies.model.Movie;
@@ -35,6 +39,7 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate{
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private List<Movie> movieList;
     private String mFilterRequest;
+    private Context mContext;
 
 
     private final String TAG = MainActivityFragment.class.getSimpleName();
@@ -43,15 +48,16 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate{
     }
 
     @Override
-    public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup,
+    public View onCreateView(@NonNull LayoutInflater layoutInflater, ViewGroup viewGroup,
                              Bundle savedInstanceState) {
 
         mView = layoutInflater.inflate(R.layout.fragment_main, viewGroup, false);
         mGridView = mView.findViewById(R.id.gv_posters);
-        movieList = new ArrayList<Movie>();
+        movieList = new ArrayList<>();
+        mContext = getContext();
         Bundle bundle = getArguments();
-        if (bundle != null && bundle.containsKey(Movie.MOVIE_KEY)){
-            mFilterRequest = bundle.getString(Movie.MOVIE_KEY, getString(R.string.pref_sort_upcoming));
+        if (bundle != null && bundle.containsKey(MoviesContract.MOVIE_KEY)){
+            mFilterRequest = bundle.getString(MoviesContract.MOVIE_KEY, getString(R.string.pref_sort_upcoming));
         } else {
             mFilterRequest = getString(R.string.pref_sort_upcoming);
         }
@@ -61,7 +67,7 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate{
     }
 
     private void initialize() {
-        movieList = new ArrayList<Movie>();
+        movieList = new ArrayList<>();
         mSwipeRefreshLayout = mView.findViewById(R.id.swipe_refresh_layout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.orange, R.color.green, R.color.blue);
         mMovieAdapter = new MovieAdapter(getActivity(), movieList);
@@ -73,7 +79,7 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), DetailActivity.class)
-                        .putExtra(Movie.MOVIE_KEY, mMovieAdapter.getItem(position));
+                        .putExtra(MoviesContract.MOVIE_KEY, mMovieAdapter.getItem(position));
                 startActivity(intent);
             }
         });
@@ -97,7 +103,7 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate{
 
     public void updateList() {
 
-        if (NetworkUtils.checkConnection(getContext())) {
+        if (NetworkUtils.checkConnection(mContext)) {
             MovieService movieService = new MovieService(this);
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
             String sortBy = preferences.getString(getString(R.string.pref_key),
@@ -122,26 +128,15 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate{
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-
-    @Override
     public void onPreStart() {
-        //mLoading.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onFinish(Object output) {
-        //mLoading.setVisibility(View.INVISIBLE);
         if (output != null){
             mMovieAdapter.clear();
             ArrayList<Movie> movieList = (ArrayList<Movie>) output;
             mMovieAdapter.addAll(movieList);
         }
-    }
-    public void setFilterRequest(String mFilterRequest) {
-        this.mFilterRequest = mFilterRequest;
     }
 }

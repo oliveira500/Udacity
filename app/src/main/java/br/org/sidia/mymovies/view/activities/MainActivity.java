@@ -6,8 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import br.org.sidia.mymovies.DataBase.MoviesContract;
 import br.org.sidia.mymovies.R;
-import br.org.sidia.mymovies.model.Movie;
 import br.org.sidia.mymovies.view.fragments.MainActivityFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         if (item.getItemId() == R.id.most_popular) {
             setTitle(getString(R.string.pref_sort_label_most_popular));
-            bundle.putString(Movie.MOVIE_KEY, getString(R.string.pref_sort_popular));
+            bundle.putString(MoviesContract.MOVIE_KEY, getString(R.string.pref_sort_popular));
         } else if (item.getItemId() == R.id.top_rated) {
             setTitle(getString(R.string.pref_sort_label_top_rated));
-            bundle.putString(Movie.MOVIE_KEY, getString(R.string.pref_sort_top_rated));
+            bundle.putString(MoviesContract.MOVIE_KEY, getString(R.string.pref_sort_top_rated));
         }
         fragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(R.id.fragment, fragment).commit();
