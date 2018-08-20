@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import br.org.sidia.mymovies.DataBase.MoviesContract;
+import br.org.sidia.mymovies.database.MoviesContract;
 import br.org.sidia.mymovies.R;
 import br.org.sidia.mymovies.view.fragments.MainActivityFragment;
 

@@ -1,4 +1,4 @@
-package br.org.sidia.mymovies.DataBase;
+package br.org.sidia.mymovies.database;
 
 import android.net.Uri;
 import android.provider.BaseColumns;

@@ -10,6 +10,9 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +22,7 @@ import android.widget.GridView;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.org.sidia.mymovies.DataBase.MoviesContract;
+import br.org.sidia.mymovies.database.MoviesContract;
 import br.org.sidia.mymovies.R;
 import br.org.sidia.mymovies.interfaces.AsyncTaskDelegate;
 import br.org.sidia.mymovies.model.Movie;
@@ -31,15 +34,17 @@ import br.org.sidia.mymovies.view.view.adapters.MovieAdapter;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment implements AsyncTaskDelegate{
+public class MainActivityFragment extends Fragment implements AsyncTaskDelegate, MovieAdapter.onRecyclerClick {
 
     public MovieAdapter mMovieAdapter;
-    private GridView mGridView;
+    private RecyclerView mGridView;
     private View mView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private List<Movie> movieList;
     private String mFilterRequest;
     private Context mContext;
+    private GridLayoutManager gridLayoutManager;
+    private int numberOfColumns = 2;
 
 
     private final String TAG = MainActivityFragment.class.getSimpleName();
@@ -55,6 +60,7 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate{
         mGridView = mView.findViewById(R.id.gv_posters);
         movieList = new ArrayList<>();
         mContext = getContext();
+        gridLayoutManager = new GridLayoutManager(mContext,numberOfColumns);
         Bundle bundle = getArguments();
         if (bundle != null && bundle.containsKey(MoviesContract.MOVIE_KEY)){
             mFilterRequest = bundle.getString(MoviesContract.MOVIE_KEY, getString(R.string.pref_sort_upcoming));
@@ -70,20 +76,10 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate{
         movieList = new ArrayList<>();
         mSwipeRefreshLayout = mView.findViewById(R.id.swipe_refresh_layout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.orange, R.color.green, R.color.blue);
-        mMovieAdapter = new MovieAdapter(getActivity(), movieList);
+        mMovieAdapter = new MovieAdapter(movieList, getActivity(), this);
+        mGridView.setLayoutManager(gridLayoutManager);
         mGridView.setAdapter(mMovieAdapter);
-
         Log.v(TAG, mMovieAdapter.toString());
-
-        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), DetailActivity.class)
-                        .putExtra(MoviesContract.MOVIE_KEY, mMovieAdapter.getItem(position));
-                startActivity(intent);
-            }
-        });
-
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -136,7 +132,14 @@ public class MainActivityFragment extends Fragment implements AsyncTaskDelegate{
         if (output != null){
             mMovieAdapter.clear();
             ArrayList<Movie> movieList = (ArrayList<Movie>) output;
-            mMovieAdapter.addAll(movieList);
+            mMovieAdapter.add(movieList);
         }
+    }
+
+    @Override
+    public void clickItem(Movie position) {
+        Intent intent = new Intent(getActivity(), DetailActivity.class)
+                .putExtra(MoviesContract.MOVIE_KEY, position);
+        startActivity(intent);
     }
 }

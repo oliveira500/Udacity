@@ -3,7 +3,7 @@ package br.org.sidia.mymovies.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import br.org.sidia.mymovies.DataBase.MoviesContract;
+import br.org.sidia.mymovies.database.MoviesContract;
 
 public class Movie implements Parcelable{
     private String movieId;

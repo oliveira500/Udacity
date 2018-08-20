@@ -12,14 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <GridView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/gv_posters"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:numColumns="auto_fit"
-        android:horizontalSpacing="0dp"
-        android:gravity="center"
-        android:padding="0dp" />
+        android:gravity="center"/>
 
     <ProgressBar
         android:id="@+id/pb_loading"

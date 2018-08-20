@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import br.org.sidia.mymovies.DataBase.MoviesContract;
+import br.org.sidia.mymovies.database.MoviesContract;
 import br.org.sidia.mymovies.R;
 import br.org.sidia.mymovies.model.Movie;
 
