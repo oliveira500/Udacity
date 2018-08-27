@@ -3,57 +3,12 @@ package br.org.sidia.mymovies.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import br.org.sidia.mymovies.database.MoviesContract;
+public class Movie implements Parcelable {
 
-public class Movie implements Parcelable{
-    private String movieId;
-    private String originalTitle;
-    private String poster;
-    private String overview;
-    private String rating;
-    private String releaseDate;
-
-    public Movie(String movieId, String originalTitle, String poster,
-                 String overview, String rating, String releaseDate) {
-        this.movieId = movieId;
-        this.originalTitle = originalTitle;
-        this.poster = MoviesContract.BASE_POSTER_PATH + poster;
-        this.overview = overview;
-        this.rating = rating + MoviesContract.MAX_RATING;
-        this.releaseDate = releaseDate;
-
-    }
-
-    private Movie(Parcel input) {
-
-        movieId = input.readString();
-        originalTitle = input.readString();
-        poster = input.readString();
-        overview = input.readString();
-        rating = input.readString();
-        releaseDate = input.readString();
-
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(movieId);
-        dest.writeString(originalTitle);
-        dest.writeString(poster);
-        dest.writeString(overview);
-        dest.writeString(rating);
-        dest.writeString(releaseDate);
-    }
-
-    public static final Parcelable.Creator<Movie> CREATOR = new Creator<Movie>() {
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
         @Override
-        public Movie createFromParcel(Parcel source) {
-            return new Movie(source);
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
         }
 
         @Override
@@ -61,43 +16,103 @@ public class Movie implements Parcelable{
             return new Movie[size];
         }
     };
-    public String getOriginalTitle() {
-        return originalTitle;
-    }
+    private int voteCount;
+    private int id;
+    private int idStorage;
+    private String voteAverage;
+    private String title;
+    private double popularity;
+    private String posterPath;
+    private String originalLanguage;
+    private String originalTitle;
+    private String backdropPath;
+    private boolean adult;
+    private String overview;
+    private String releaseDate;
 
-    public void setOriginalTitle(String originalTitle) {
+    public Movie(int idStorage, int id, String voteAverage, String title, String originalTitle, String posterPath, String backdropPath, String overview, String releaseDate) {
+        this.idStorage = idStorage;
+        this.id = id;
+        this.voteAverage = voteAverage;
+        this.title = title;
+        this.posterPath = posterPath;
+        this.backdropPath = backdropPath;
+        this.overview = overview;
+        this.releaseDate = releaseDate;
         this.originalTitle = originalTitle;
     }
 
-    public String getPoster() {
-        return poster;
+    protected Movie(Parcel in) {
+        voteCount = in.readInt();
+        id = in.readInt();
+        idStorage = in.readInt();
+        voteAverage = in.readString();
+        title = in.readString();
+        popularity = in.readDouble();
+        posterPath = in.readString();
+        originalLanguage = in.readString();
+        originalTitle = in.readString();
+        backdropPath = in.readString();
+        adult = in.readByte() != 0;
+        overview = in.readString();
+        releaseDate = in.readString();
     }
 
-    public void setPoster(String poster) {
-        this.poster = poster;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(voteCount);
+        dest.writeInt(id);
+        dest.writeInt(idStorage);
+        dest.writeString(voteAverage);
+        dest.writeString(title);
+        dest.writeDouble(popularity);
+        dest.writeString(posterPath);
+        dest.writeString(originalLanguage);
+        dest.writeString(originalTitle);
+        dest.writeString(backdropPath);
+        dest.writeByte((byte) (adult ? 1 : 0));
+        dest.writeString(overview);
+        dest.writeString(releaseDate);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public int getIdStorage() {
+        return idStorage;
+    }
+
+    public void setIdStorage(int id) {
+        this.idStorage = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getVoteAverage() {
+        return voteAverage;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getPosterPath() {
+        return posterPath;
     }
 
     public String getOverview() {
         return overview;
     }
 
-    public void setOverview(String overview) {
-        this.overview = overview;
-    }
-
-    public String getRating() {
-        return rating;
-    }
-
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
-
     public String getReleaseDate() {
         return releaseDate;
-    }
-
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
     }
 }
