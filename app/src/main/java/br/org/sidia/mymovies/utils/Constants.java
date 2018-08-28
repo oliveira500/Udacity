@@ -10,6 +10,8 @@ public class Constants {
     public static final String URL_IMAGE_BASE = "http://image.tmdb.org/t/p/w185//";
     public static final String ITEM_MOVIE = "item_movie";
     public static final String API_YOUTUBE = "http://www.youtube.com/watch?v=";
+    public static final String MOVIES_SAVED_INSTANCE_LIST_KEY = "array_of_movies";
+    public static final String MOVIES_SAVED_INSTANCE_TITLE = "tile_list";
 
     public static String RELATED_VIDEOS(String videoId) {
         return "http://api.themoviedb.org/3/movie/" + videoId + "/videos?api_key=" + API_KEY;

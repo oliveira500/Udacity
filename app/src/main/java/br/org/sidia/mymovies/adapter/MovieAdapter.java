@@ -14,9 +14,9 @@ import br.org.sidia.mymovies.utils.Constants;
 
 public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    List<Movie> result;
-    Context mContext;
-    onRecyclerClick onRecyclerClick;
+    private List<Movie> result;
+    private Context mContext;
+    private onRecyclerClick onRecyclerClick;
 
     public MovieAdapter(List<Movie> movies, Context mContext, onRecyclerClick onRecyclerClick) {
         this.result = movies;
@@ -80,5 +80,13 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         public void onClick(View v) {
             onRecyclerClick.clickItem(result.get(getAdapterPosition()));
         }
+    }
+
+    public List<Movie> getResult() {
+        return result;
+    }
+
+    public void setResult(List<Movie> result) {
+        this.result = result;
     }
 }

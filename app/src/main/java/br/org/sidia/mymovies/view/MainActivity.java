@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.support.annotation.StringDef;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -18,6 +19,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+
+import java.io.Serializable;
 import java.lang.annotation.Retention;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,13 +59,22 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.onRe
         recyclerView.setLayoutManager(grid);
         adapter = new MovieAdapter(movies, MainActivity.this, MainActivity.this);
         recyclerView.setAdapter(adapter);
-        loadMovies(Constants.MOST_POPULAR);
+        if (savedInstanceState == null){
+            loadMovies(Constants.MOST_POPULAR);
+        } else {
+            state = savedInstanceState.getString(Constants.MOVIES_SAVED_INSTANCE_TITLE);
+            adapter.add((List<Movie>) savedInstanceState.getSerializable(Constants.MOVIES_SAVED_INSTANCE_LIST_KEY));
+            updateTitle();
+        }
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelable(Constants.INSTANCE_STATE, recyclerView.getLayoutManager().onSaveInstanceState());
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putSerializable(Constants.MOVIES_SAVED_INSTANCE_LIST_KEY, (Serializable) adapter.getResult());
+        savedInstanceState.putParcelable(Constants.INSTANCE_STATE, recyclerView.getLayoutManager().onSaveInstanceState());
+        savedInstanceState.putString(Constants.MOVIES_SAVED_INSTANCE_TITLE, state);
+        super.onSaveInstanceState(savedInstanceState);
+
     }
 
     @Override
@@ -254,4 +266,5 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.onRe
     })
     public @interface StateMovie {
     }
+
 }
