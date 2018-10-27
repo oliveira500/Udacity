@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.org.sidia.mymovies">
+    package="br.org.sidia.baking">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -13,21 +13,35 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="br.org.sidia.mymovies.view.MainActivity">
+            android:name=".MainActivity"
+            android:label="Baking App">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="br.org.sidia.mymovies.view.DetailActivity"
-            android:configChanges="orientation|screenSize" />
+            android:name=".RecipeStepActivity" >
+        </activity>
+
+        <receiver android:name=".RecipeWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_ADDED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/recipe_widget_info" />
+        </receiver>
+        
+        <service android:name=".Widget.WidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <provider
-            android:name="br.org.sidia.mymovies.provider.MovieContentProvider"
-            android:authorities="sidia.mymovies"
-            android:exported="false" />
+            android:authorities="com.example.android.baking"
+            android:name=".Widget.WidgetProvider" />
 
     </application>
 
