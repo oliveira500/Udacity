@@ -1,18 +1,22 @@
 <resources>
-    <string name="app_name">My Movies</string>
+    <string name="app_name">Baking App</string>
+    <string name="baking_app">baking</string>
 
-    <string name="menu_most_popular">Most Popular</string>
-    <string name="menu_top_rated">Top Rated</string>
-    <string name="menu_favorites">Favorites</string>
-    <string name="erro_list_load">Error loading list. Do you want to try again? </string>
-    <string name="erro_list_favorites">You have no favorites. Do you want to see online movies list ?</string>
-    <string name="erro_trailer_list">No video found, want to try again?</string>
-    <string name="no_internet_alert">There is no internet connection. Please connect to the internet and retry.</string>
-    <string name="yes">Yes</string>
-    <string name="remark">/10</string>
-    <string name="description">Cover Image</string>
+    <string name="no_internet">No connection with internet</string>
+    <string name="no_video">No video available</string>
+    <string name="txt_serving">Servings:</string>
+    <string name="txt_card">Card</string>
 
-    <string name="trailers">Trailers: </string>
-    <string name="reviews">Reviews: </string>
+    <string name="txt_shortDescription">Short Descritpion</string>
+    <string name="txt_thumbnail">Thumbnail</string>
+    <string name="appwidget_text">Baking</string>
+    <string name="add_widget">Add widget</string>
+
+    <string name="txt_measure">Measure</string>
+    <string name="txt_quantity">Quantity</string>
+    <string name="txt_ingredient">Ingredient</string>
+
+    <string name="show_data_widget">Show in Widget</string>
+    <string name="toast_info_widget">Ingredients inserted in widget</string>
 
 </resources>
