@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:padding="15dp"
     android:textSize="20sp"
-    android:textStyle="italic">
+    android:textStyle="italic"
+    android:background="#FFFFFF">
 
 </TextView>

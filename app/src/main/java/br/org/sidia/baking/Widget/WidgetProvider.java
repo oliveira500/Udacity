@@ -100,7 +100,7 @@ public class WidgetProvider extends ContentProvider{
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
         final SQLiteDatabase db = widgetDbHelper.getWritableDatabase();
         int match = uriMatcher.match(uri);
-        int id = 0;
+        int id;
 
         switch (match){
             case INGREDIENT:
