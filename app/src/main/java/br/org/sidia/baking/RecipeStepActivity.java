@@ -22,7 +22,6 @@ public class RecipeStepActivity extends AppCompatActivity implements StepAdapter
 
     private Recipe recipe;
     private boolean isTablet;
-
     private static final String FRAGMENT_STATUS = "frag_status";
     private static final String STATUS = "status";
 
