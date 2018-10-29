@@ -1,10 +1,10 @@
-package br.org.sidia.baking.Widget;
+package br.org.sidia.baking.widget;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import br.org.sidia.baking.Widget.WidgetContract.IngredientEntry;
+import br.org.sidia.baking.widget.WidgetContract.IngredientEntry;
 
 public class WidgetDbHelper extends SQLiteOpenHelper{
 

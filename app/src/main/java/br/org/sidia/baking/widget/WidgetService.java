@@ -1,4 +1,4 @@
-package br.org.sidia.baking.Widget;
+package br.org.sidia.baking.widget;
 
 import android.content.Context;
 import android.content.Intent;

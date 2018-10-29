@@ -1,4 +1,4 @@
-package br.org.sidia.baking.Adapter;
+package br.org.sidia.baking.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import br.org.sidia.baking.Model.Ingredient;
+import br.org.sidia.baking.model.Ingredient;
 import br.org.sidia.baking.R;
 
 

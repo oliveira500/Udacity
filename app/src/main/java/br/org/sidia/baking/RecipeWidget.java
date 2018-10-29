@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import br.org.sidia.baking.Widget.WidgetService;
+import br.org.sidia.baking.widget.WidgetService;
 
 public class RecipeWidget extends AppWidgetProvider {
 

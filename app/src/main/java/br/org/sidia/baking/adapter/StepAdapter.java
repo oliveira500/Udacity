@@ -1,4 +1,4 @@
-package br.org.sidia.baking.Adapter;
+package br.org.sidia.baking.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import br.org.sidia.baking.R;
 
-import br.org.sidia.baking.Model.Step;
-import br.org.sidia.baking.Utils.Network;
-import br.org.sidia.baking.Utils.ThumbnailRetriever;
+import br.org.sidia.baking.model.Step;
+import br.org.sidia.baking.utils.Network;
+import br.org.sidia.baking.utils.ThumbnailRetriever;
 
 public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepAdapterViewHolder>{
 

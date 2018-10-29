@@ -110,7 +110,7 @@ public class MainActivityTest {
         }
 
         ViewInteraction actionMenuItemView = onView(
-                allOf(withId(R.id.menu_info), withContentDescription("Show in Widget"),
+                allOf(withId(R.id.menu_info), withContentDescription("Show in widget"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.action_bar),
@@ -142,7 +142,7 @@ public class MainActivityTest {
         appCompatTextView.perform(click());
 
         ViewInteraction actionMenuItemView2 = onView(
-                allOf(withId(R.id.menu_info), withContentDescription("Show in Widget"),
+                allOf(withId(R.id.menu_info), withContentDescription("Show in widget"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.action_bar),
@@ -174,7 +174,7 @@ public class MainActivityTest {
         appCompatImageButton4.perform(click());
 
         ViewInteraction actionMenuItemView3 = onView(
-                allOf(withId(R.id.menu_info), withContentDescription("Show in Widget"),
+                allOf(withId(R.id.menu_info), withContentDescription("Show in widget"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.action_bar),

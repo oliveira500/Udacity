@@ -19,10 +19,10 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.net.URL;
 
-import br.org.sidia.baking.Adapter.RecipeAdapter;
-import br.org.sidia.baking.Model.Recipe;
-import br.org.sidia.baking.Utils.Network;
-import br.org.sidia.baking.Utils.ParseJson;
+import br.org.sidia.baking.adapter.RecipeAdapter;
+import br.org.sidia.baking.model.Recipe;
+import br.org.sidia.baking.utils.Network;
+import br.org.sidia.baking.utils.ParseJson;
 
 public class MainActivity extends AppCompatActivity implements RecipeAdapter.RecipeAdapterOnClickHandler, LoaderManager.LoaderCallbacks<Recipe[]>{
 

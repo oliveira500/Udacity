@@ -1,4 +1,4 @@
-package br.org.sidia.baking.Model;
+package br.org.sidia.baking.model;
 
 import java.io.Serializable;
 

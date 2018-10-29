@@ -1,4 +1,4 @@
-package br.org.sidia.baking.Widget;
+package br.org.sidia.baking.widget;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -11,7 +11,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import br.org.sidia.baking.Widget.WidgetContract.IngredientEntry;
+import br.org.sidia.baking.widget.WidgetContract.IngredientEntry;
 
 public class WidgetProvider extends ContentProvider{
 
