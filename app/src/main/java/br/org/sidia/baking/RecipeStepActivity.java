@@ -1,6 +1,9 @@
 package br.org.sidia.baking;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -35,14 +38,17 @@ public class RecipeStepActivity extends AppCompatActivity implements StepAdapter
         setContentView(R.layout.activity_recipe_step);
 
         ActionBar actionBar = this.getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         if (getIntent() != null){
             if (getIntent().hasExtra(KEY_INTENT) && getIntent().hasExtra(KEY_TABLET)){
                 recipe = (Recipe) getIntent().getSerializableExtra(KEY_INTENT);
                 isTablet = getIntent().getBooleanExtra(KEY_TABLET, false);
-
-                actionBar.setTitle(recipe.getName());
+                if (actionBar != null && !recipe.getName().isEmpty()){
+                    actionBar.setTitle(recipe.getName());
+                }
 
                 if (savedInstanceState != null) {
                     if (savedInstanceState.getBoolean(STATUS)) {
@@ -118,7 +124,12 @@ public class RecipeStepActivity extends AppCompatActivity implements StepAdapter
             getContentResolver().insert(WidgetContract.IngredientEntry.CONTENT_URI, contentValues);
 
         }
-
+        Intent intent = new Intent(this, RecipeWidget.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        ComponentName thisAppWidget = new ComponentName(this, RecipeWidget.class);
+        int[] ids = AppWidgetManager.getInstance(this).getAppWidgetIds(thisAppWidget);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        sendBroadcast(intent);
         Toast.makeText(this, getString(R.string.toast_info_widget), Toast.LENGTH_SHORT).show();
     }
 
