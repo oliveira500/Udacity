@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import br.org.sidia.baking.Adapter.RecipeAdapter;
-import br.org.sidia.baking.Model.Recipe;
+import br.org.sidia.baking.adapter.RecipeAdapter;
+import br.org.sidia.baking.model.Recipe;
 
 public class MasterRecipeFragment extends Fragment{
 

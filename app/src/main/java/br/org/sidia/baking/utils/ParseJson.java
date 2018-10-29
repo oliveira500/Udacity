@@ -1,4 +1,4 @@
-package br.org.sidia.baking.Utils;
+package br.org.sidia.baking.utils;
 
 import android.util.Log;
 
@@ -6,9 +6,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import br.org.sidia.baking.Model.Ingredient;
-import br.org.sidia.baking.Model.Recipe;
-import br.org.sidia.baking.Model.Step;
+import br.org.sidia.baking.model.Ingredient;
+import br.org.sidia.baking.model.Recipe;
+import br.org.sidia.baking.model.Step;
 
 public class ParseJson {
 

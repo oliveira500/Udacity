@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import br.org.sidia.baking.Widget.WidgetService;
+import br.org.sidia.baking.widget.WidgetService;
 
 public class RecipeWidget extends AppWidgetProvider {
 
@@ -20,6 +20,7 @@ public class RecipeWidget extends AppWidgetProvider {
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_ingredients_widget);
     }
 
     @Override

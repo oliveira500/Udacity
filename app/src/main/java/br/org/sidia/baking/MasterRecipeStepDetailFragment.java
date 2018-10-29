@@ -25,10 +25,10 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
-import br.org.sidia.baking.Adapter.IngredientAdapter;
-import br.org.sidia.baking.Model.Ingredient;
-import br.org.sidia.baking.Model.Step;
-import br.org.sidia.baking.Utils.Network;
+import br.org.sidia.baking.adapter.IngredientAdapter;
+import br.org.sidia.baking.model.Ingredient;
+import br.org.sidia.baking.model.Step;
+import br.org.sidia.baking.utils.Network;
 
 public class MasterRecipeStepDetailFragment extends Fragment{
 

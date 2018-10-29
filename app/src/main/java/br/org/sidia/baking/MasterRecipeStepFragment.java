@@ -7,8 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import br.org.sidia.baking.Adapter.StepAdapter;
-import br.org.sidia.baking.Model.Step;
+import br.org.sidia.baking.adapter.StepAdapter;
+import br.org.sidia.baking.model.Ingredient;
+import br.org.sidia.baking.model.Step;
 
 public class MasterRecipeStepFragment extends Fragment {
 
@@ -17,6 +18,7 @@ public class MasterRecipeStepFragment extends Fragment {
     private Step[] steps;
     private RecyclerView recyclerView;
     private StepAdapter stepAdapter;
+    private Ingredient[] ingredients;
 
     public MasterRecipeStepFragment(){
     }
@@ -44,6 +46,9 @@ public class MasterRecipeStepFragment extends Fragment {
         this.steps = steps;
     }
 
+    public void setIngredients(Ingredient[] ingredients) {
+        this.ingredients = ingredients;
+    }
     public void setStepAdapterOnClickHandler(StepAdapter.StepAdapterOnClickHandler stepAdapterOnClickHandler){
         this.stepAdapterOnClickHandler = stepAdapterOnClickHandler;
     }

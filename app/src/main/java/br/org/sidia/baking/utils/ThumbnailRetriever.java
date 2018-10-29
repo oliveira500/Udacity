@@ -1,4 +1,4 @@
-package br.org.sidia.baking.Utils;
+package br.org.sidia.baking.utils;
 
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;

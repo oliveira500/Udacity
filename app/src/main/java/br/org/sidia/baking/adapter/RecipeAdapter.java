@@ -1,4 +1,4 @@
-package br.org.sidia.baking.Adapter;
+package br.org.sidia.baking.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import br.org.sidia.baking.R;
 
-import br.org.sidia.baking.Model.Recipe;
-import br.org.sidia.baking.Utils.Network;
+import br.org.sidia.baking.model.Recipe;
+import br.org.sidia.baking.utils.Network;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdapterViewHolder>{
 

@@ -1,9 +1,9 @@
-package br.org.sidia.baking.Widget;
+package br.org.sidia.baking.widget;
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
+import android.os.Binder;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -11,14 +11,9 @@ import br.org.sidia.baking.R;
 
 public class WidgetService extends RemoteViewsService {
 
-    public Cursor getIngredientList(){
-        Uri INGREDIENT = WidgetContract.IngredientEntry.CONTENT_URI;
-        return getContentResolver().query(INGREDIENT, null, null, null, null);
-    }
-
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return new ListWidgetItem(getApplicationContext(), getIngredientList());
+        return new ListWidgetItem(getApplicationContext());
     }
 
     public class ListWidgetItem implements RemoteViewsFactory {
@@ -26,24 +21,35 @@ public class WidgetService extends RemoteViewsService {
         private Context mContext;
         private Cursor mCursor;
 
-        private ListWidgetItem(Context context, Cursor cursor){
+        public ListWidgetItem(Context context){
             this.mContext = context;
-            this.mCursor = cursor;
+            this.mCursor = null;
         }
 
         @Override
         public void onCreate() {
-
+            this.mCursor = mContext.getContentResolver().query(WidgetContract.IngredientEntry.CONTENT_URI, null, null, null, null);
         }
 
         @Override
         public void onDataSetChanged() {
-
+            final long token = Binder.clearCallingIdentity();
+            try {
+                if(this.mCursor != null) {
+                    this.mCursor.close();
+                }
+                this.mCursor = mContext.getContentResolver().query(WidgetContract.IngredientEntry.CONTENT_URI, null, null, null, null);
+            } finally {
+                Binder.restoreCallingIdentity(token);
+            }
         }
 
         @Override
         public void onDestroy() {
-
+            if (this.mCursor != null){
+                this.mCursor.close();
+                this.mCursor = null;
+            }
         }
 
         @Override
@@ -51,7 +57,7 @@ public class WidgetService extends RemoteViewsService {
             if (mCursor != null)
                 return mCursor.getCount();
             else
-                return 1;
+                return 0;
         }
 
         @Override
