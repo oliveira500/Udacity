@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="finalproject.sidia.com.androidjoke">
+
+    <application
+        android:allowBackup="false"
+        android:label="@string/app_name">
+        <activity
+            android:name="finalproject.sidia.com.androidjoke.JokeActivity"
+            android:label="@string/app_name" />
+    </application>
+
+</manifest>
