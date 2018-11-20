@@ -28,7 +28,7 @@ public class EndpointsAsyncTaskTestUnit{
    @Test
    public void testJokeIsNotEmpty() throws Exception {
 
-       EndpointsAsyncTask mServiceTest =  new EndpointsAsyncTask(InstrumentationRegistry.getContext());
+       EndpointsAsyncTask mServiceTest =  new EndpointsAsyncTask(InstrumentationRegistry.getTargetContext());
        mServiceTest.execute();
        String joke = mServiceTest.get(7, TimeUnit.SECONDS);
        Assert.assertNotNull(joke);
